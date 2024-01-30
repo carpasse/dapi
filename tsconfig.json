@@ -27,6 +27,8 @@
     "rootDir": "src",
     "strict": true,
     "strictBindCallApply": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
     "target": "ES2022",
     "types": ["node"]
   }
