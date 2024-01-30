@@ -1,0 +1,72 @@
+{
+  "name": "@carpasse/dapi",
+  "version": "0.1.0",
+  "description": "Simple library to create complex systems out of pure functions",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/cjs/index.mjs",
+  "type": "module",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carpasse/dapi.git"
+  },
+  "scripts": {
+    "test": "node --import tsx --no-warnings --test src/**/*.test.ts",
+    "test:watch": "node --import tsx --no-warnings --test --watch ./src/**/*.test.ts",
+    "test:coverage": "node --import tsx --no-warnings --test --experimental-test-coverage ./src/**/*.test.ts",
+    "build": "npm-run-all clean build:*",
+    "clean": "rimraf dist",
+    "build:cjs": "tsc -p ./tsconfig.cjs.json && cat >dist/cjs/package.json <<!EOF\n{\n    \"type\": \"commonjs\"\n}\n!EOF",
+    "build:esm": "tsc --project tsconfig.esm.json && cat >dist/esm/package.json <<!EOF\n{\n    \"type\": \"module\"\n}\n!EOF",
+    "lint": "eslint './**/*.{js,jsx,ts,tsx}' && npm run typecheck",
+    "lint:fix": "eslint './**/*.{js,jsx,ts,tsx}' --fix",
+    "typecheck": "tsc --noEmit",
+    "husky:install": "husky install",
+    "husky:setup": "npx husky add .husky/pre-commit \"npm run pre-commit\" && npx husky add .husky/pre-push \"npm run pre-push\" && npx husky add .husky/commit-msg \"npm run commitlint\"",
+    "prepare": "husky install && npm run husky:setup",
+    "preversion": "npm run lint && npm run test && npm run build",
+    "postversion": "git push && git push --tags && npm publish",
+    "pre-commit": "pretty-quick --staged && npm run lint",
+    "pre-push": "npm run test",
+    "commitlint": "commitlint --edit"
+  },
+  "author": "Carlos Serrano",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.x"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "commitizen": "^4.3.0",
+    "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.55.0",
+    "eslint-config-ts-mailonline": "^3.0.0",
+    "husky": "^8.0.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.8",
+    "pretty-quick": "^3.1.3",
+    "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
+    "tsx": "^4.6.2",
+    "typescript": "^5.3.2"
+  }
+}

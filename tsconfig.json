@@ -1,0 +1,27 @@
+{
+  "include": ["./src/**/*.ts", "./src/**/*.d.ts", "./src/**/*.json"],
+  "exclude": ["node_modules", "dist", "coverage", "./src/**/*.test.ts", "./src/**/__tests__/**/*.ts"],
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["ES2023"],
+    "module": "ES2020",
+    "moduleResolution": "Node",
+    "noEmitHelpers": false,
+    "noEmitOnError": true,
+    "noErrorTruncation": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "pretty": true,
+    "rootDir": "src",
+    "strict": true,
+    "strictBindCallApply": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "target": "ES2022",
+    "types": ["node"]
+  }
+}
