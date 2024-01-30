@@ -266,7 +266,7 @@ Represents an [`DapiWrapper`](#dapiwrapper) definition with dependencies and fns
 - `type` - The type of the `DapiWrapper`.
 - `name` - The name of the `DapiWrapper`.
 
-### DapiMixin
+### `DapiMixin`
 
 [Mixin](https://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/) fn that creates a [`DapiWrapper`]() class that extends the passed SuperClass class and wraps the passed DapiFns dictionary.
 
