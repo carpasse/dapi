@@ -1,8 +1,8 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "declaration": false,
-    "declarationDir": null,
+    "declaration": true,
+    "declarationDir": "./dist/cjs",
     "module": "commonjs",
     "outDir": "./dist/cjs"
   }
