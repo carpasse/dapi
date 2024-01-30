@@ -25,13 +25,13 @@ describe('createApi', () => {
     definition = {dependencies: deps, fns, type: 'test'};
   });
 
-  it('should create an api', () => {
+  it('should create an DapiWrapper instance', () => {
     const api = createDapi(definition);
 
     assert.equal(typeof api.command1, 'function');
   });
 
-  it('should call the command', () => {
+  it('facade method should call the passed DapiFn', () => {
     const api = createDapi(definition);
 
     api.command1('a1', 'a2');
@@ -46,7 +46,7 @@ describe('createApi', () => {
     assert(api instanceof EventEmitter);
   });
 
-  it('should be possible to decorate a command', () => {
+  it('should be possible to decorate a passed DapiFn', () => {
     const api = createDapi(definition, EventEmitter);
     const spy = mock.fn();
 

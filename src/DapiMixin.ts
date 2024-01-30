@@ -23,7 +23,7 @@ export interface DapiDefinition<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>
  * @param SuperClass The superclass to be extended.
  * @returns The enhanced class with DAPI functionality.
  */
-export default function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T extends Constructor<{}>>(
+export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T extends Constructor<{}>>(
   definition: DapiDefinition<DEPENDENCIES, DAPI>,
   SuperClass: T
 ) {

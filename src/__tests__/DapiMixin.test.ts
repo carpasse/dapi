@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file, no-invalid-this, class-methods-use-this */
 import {describe, it, mock, beforeEach, Mock} from 'node:test';
 import assert from 'node:assert/strict';
-import DapiMixin, {type DapiDefinition} from '../DapiMixin';
+import {DapiMixin, type DapiDefinition} from '../DapiMixin';
 import {assertType} from '../types/assertType';
 
 class BaseTestClass {

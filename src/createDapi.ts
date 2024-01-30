@@ -1,4 +1,4 @@
-import DapiMixin, {DapiDefinition} from './DapiMixin';
+import {DapiMixin, DapiDefinition} from './DapiMixin';
 import {DapiFns} from './types';
 import {Constructor} from './types/utils';
 
