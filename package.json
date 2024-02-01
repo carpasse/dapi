@@ -32,6 +32,7 @@
     "build:esm": "tsc --project tsconfig.esm.json && cat >dist/esm/package.json <<!EOF\n{\n    \"type\": \"module\"\n}\n!EOF",
     "lint": "eslint './**/*.{js,jsx,ts,tsx}' && npm run typecheck",
     "lint:fix": "eslint './**/*.{js,jsx,ts,tsx}' --fix",
+    "lint:ci": "eslint './**/*.{js,jsx,ts,tsx}' --fix",
     "typecheck": "tsc --noEmit",
     "husky:setup": "npx husky add .husky/pre-commit \"npm run pre-commit\" && npx husky add .husky/pre-push \"npm run pre-push\" && npx husky add .husky/commit-msg \"npm run commitlint\"",
     "husky": "npx husky install && npm run husky:setup",
