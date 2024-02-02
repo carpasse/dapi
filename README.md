@@ -209,21 +209,21 @@ const start = async (config: Config) => {
 
     await db.close();
 
-    user.updateDependencies({db}); // From this point on all the user Dapi fns will receive the new db client on their first argument
+    user.updateDependencies({db}); // From this point on the user Dapi fns will receive the new db client on their first argument
   });
 
   if(config.profile.customer) {
-    customer.decorate('createCustomer', (createCustomer, deps, ...args) => {
-      return profile(deps.logger, createCustomer(deps, ...args));
+    customer.decorate('create', (create, deps, ...args) => {
+      return profile(deps.logger, create(deps, ...args));
     });
   }
 
   // you could also add hooks to the DapiFns
-  customer.addHook('preCreateCustomer', (createCustomer, deps, ...args) => {
+  customer.addPreHook('create', (create, deps, ...args) => {
     deps.logger.info(`Create customer start` data);
   });
 
-  customer.addHook('preCreateCustomer', (createCustomer, deps, ...args) => {
+  customer.addPostHook('create', (createCustomer, deps, ...args) => {
     deps.logger.info(`Create customer end` data);
   });
 
@@ -266,7 +266,7 @@ Represents an [`DapiWrapper`](#dapiwrapper) definition with dependencies and fns
 - `type` - The type of the `DapiWrapper`.
 - `name` - The name of the `DapiWrapper`.
 
-### DapiMixin
+### `DapiMixin`
 
 [Mixin](https://justinfagnani.com/2015/12/21/real-mixins-with-javascript-classes/) fn that creates a [`DapiWrapper`]() class that extends the passed SuperClass class and wraps the passed DapiFns dictionary.
 
