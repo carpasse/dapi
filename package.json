@@ -1,5 +1,5 @@
 {
-  "name": "@carpasse/dapi",
+  "name": "dapi",
   "version": "0.1.0",
   "description": "Simple library to create complex systems out of pure functions",
   "main": "./dist/cjs/index.js",
@@ -18,6 +18,11 @@
       }
     }
   },
+  "keywords": [
+    "pure functions",
+    "dependency injection",
+    "dapi"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/carpasse/dapi.git"
@@ -43,6 +48,9 @@
   },
   "author": "Carlos Serrano",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=16.x"
   },

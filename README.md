@@ -5,7 +5,7 @@ Simple library to create complex systems out of pure functions
 ## Installation
 
 ```bash
-npm install -D @carpasse/dapi
+npm install -D dapi
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install -D @carpasse/dapi
 To create an `DapiWrapper` you need to create an [`DapiDefinition`](#dapidefinition) object and pass it to the [`createDapi`](#createdapi) factory function.
 
 ```Typescript
-import {createDapi} from '@carpasse/dapi';
+import {createDapi} from 'dapi';
 
 type Dependencies = {
   db: OracleClient,
@@ -153,7 +153,7 @@ export const createCustomer = async (
 Ideally you should pass a `createUser` fn with its dependencies already set to the `createCustomer` fn. This way, the `createCustomer` fn does not need to know about the dependencies of the `createPerson` fn. It only needs to know about the dependencies it needs to do its job.
 
 ```Typescript
-import {createDapi, DapiFn} from '@carpasse/dapi';
+import {createDapi, DapiFn} from 'dapi';
 import type {DapiUser, UserData} from './user';
 import type {Logger} from './logger';
 import type {RabbitMQ} from './mqBroker';
@@ -435,7 +435,7 @@ Adds a decorator to a `DapiFn` of the `DapiWrapper` instance.
 **Example**
 
 ```Typescript
-import {createDapi} from '@carpasse/dapi';
+import {createDapi} from 'dapi';
 import {profile} from './profiler';
 import {createPerson} from './person';
 
