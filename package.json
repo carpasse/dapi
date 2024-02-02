@@ -1,5 +1,5 @@
 {
-  "name": "d-api",
+  "name": "@carpasse/dapi",
   "version": "0.1.0",
   "description": "Simple library to create complex systems out of pure functions",
   "main": "./dist/cjs/index.js",
