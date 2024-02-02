@@ -37,8 +37,6 @@
     "husky:setup": "npx husky add .husky/pre-commit \"npm run pre-commit\" && npx husky add .husky/pre-push \"npm run pre-push\" && npx husky add .husky/commit-msg \"npm run commitlint\"",
     "husky": "npx husky install && npm run husky:setup",
     "prepare": "shx test -d .husky || npm run husky",
-    "preversion": "npm run lint && npm run test && npm run build",
-    "postversion": "git push && git push --tags && npm publish",
     "pre-commit": "pretty-quick --staged && npm run lint",
     "pre-push": "npm run test",
     "commitlint": "commitlint --edit"
