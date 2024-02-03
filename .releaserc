@@ -8,7 +8,7 @@
           {
             "type": "docs",
             "scope": "README",
-            "release": "patch"
+            "release": false
           },
           {
             "type": "refactor",
@@ -24,23 +24,27 @@
           },
           {
             "type": "test",
-            "release": "patch"
+            "release": false
           },
           {
             "type": "build",
-            "release": "patch"
+            "release": false
           },
           {
             "type": "ci",
-            "release": "patch"
+            "release": false
           },
           {
             "type": "chore",
-            "release": "patch"
+            "release": false
           },
           {
             "type": "revert",
             "release": "patch"
+          },
+          {
+            "scope": "no-release",
+            "release": false
           }
         ]
       }
