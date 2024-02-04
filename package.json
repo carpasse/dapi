@@ -1,6 +1,6 @@
 {
   "name": "@carpasse/dapi",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Simple library to create complex systems out of pure functions",
   "main": "./dist/cjs/index.js",
   "module": "./dist/cjs/index.mjs",
@@ -63,6 +63,7 @@
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
     "@semantic-release/commit-analyzer": "^11.1.0",
+    "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^9.2.6",
     "@semantic-release/npm": "^11.0.2",
     "@semantic-release/release-notes-generator": "^12.1.0",
