@@ -1,6 +1,6 @@
 {
   "name": "@carpasse/dapi",
-  "version": "1.0.0",
+  "version": "1.0.1-beta.2",
   "description": "Simple library to create complex systems out of pure functions",
   "main": "./dist/cjs/index.js",
   "module": "./dist/cjs/index.mjs",
@@ -27,6 +27,12 @@
     "type": "git",
     "url": "git+https://github.com/carpasse/dapi.git"
   },
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "test": "node --import tsx --no-warnings --test src/**/*.test.ts",
     "test:watch": "node --import tsx --no-warnings --test --watch ./src/**/*.test.ts",
@@ -43,6 +49,7 @@
     "husky": "npx husky install && npm run husky:setup",
     "prepare": "shx test -d .husky || npm run husky",
     "pre-commit": "pretty-quick --staged && npm run lint",
+    "license-check": "npx @onebeyond/license-checker check \"(MIT OR GPL-1.0+) AND 0BSD\"",
     "pre-push": "npm run test",
     "commitlint": "commitlint --edit"
   },
@@ -62,6 +69,7 @@
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
+    "@onebeyond/license-checker": "^2.0.1",
     "@semantic-release/commit-analyzer": "^11.1.0",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^9.2.6",

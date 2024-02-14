@@ -1,0 +1,5 @@
+name: Run tests
+on: [pull_request]
+jobs:
+  validation:
+    uses: carpasse/reusable-workflows/.github/workflows/runTests.yml@master
