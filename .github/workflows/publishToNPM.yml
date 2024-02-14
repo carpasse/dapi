@@ -1,0 +1,9 @@
+name: Publish to NPM
+on:
+  push:
+    branches: ['master', 'beta', 'alpha']
+jobs:
+  release:
+    uses: carpasse/reusable-workflows/.github/workflows/publishToNPM.yml@master
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
