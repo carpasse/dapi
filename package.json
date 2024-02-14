@@ -27,6 +27,12 @@
     "type": "git",
     "url": "git+https://github.com/carpasse/dapi.git"
   },
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "test": "node --import tsx --no-warnings --test src/**/*.test.ts",
     "test:watch": "node --import tsx --no-warnings --test --watch ./src/**/*.test.ts",
