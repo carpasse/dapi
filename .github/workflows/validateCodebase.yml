@@ -1,0 +1,5 @@
+name: Validate Codebase
+on: [pull_request]
+jobs:
+  validation:
+    uses: carpasse/reusable-workflows/.github/workflows/validateCodebase.yml@master
