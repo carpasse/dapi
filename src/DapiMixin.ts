@@ -198,6 +198,15 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
     }
 
     /**
+     * DapiDefinition getter.
+     *
+     * @returns DapiDefinition
+     */
+    getDefinition() {
+      return this.__definition;
+    }
+
+    /**
      * Returns a JSON representation of the `DapiWrapper` instance.
      * @param replacer An array of strings and numbers that acts as an approved list for selecting the object properties that will be stringified.
      * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
@@ -238,6 +247,25 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
 
       return () => {
         this.removeDecorator(key, decorator);
+      };
+    }
+
+    /**
+     * Decorates all the Dapi functions of the `DapiWrapper`'s Dapi functions dictionary.
+     * @param decorator The decorator function. The decorator function receives the decorated function as its first argument and the rest of the arguments are the arguments of the decorated function.
+     * @returns A function to remove all the added decorators.
+     */
+    decorateAll(decorator: DecoratorFn<DAPI[keyof DAPI], DapiWrapper>) {
+      const removeDecorators: (() => void)[] = [];
+
+      for (const key of Object.keys(this.__definition.fns)) {
+        removeDecorators.push(this.addDecorator(key as keyof DAPI, decorator));
+      }
+
+      return () => {
+        for (const removeDecorator of removeDecorators) {
+          removeDecorator();
+        }
       };
     }
 

@@ -117,6 +117,13 @@ describe('DapiMixin', () => {
       assert.deepStrictEqual(testClass.getDependencies(), newDependencies);
     });
 
+    it('should expose a definition getter', () => {
+      const TestClass = DapiMixin(definition, BaseTestClass);
+      const instance = new TestClass();
+
+      assert.deepStrictEqual(instance.getDefinition(), definition);
+    });
+
     it('should throw if you try to set the dependencies to a falsy value', () => {
       const TestClass = DapiMixin(definition, BaseTestClass);
       const instance = new TestClass();
@@ -308,7 +315,7 @@ describe('DapiMixin', () => {
       assert.throws(() => instance.command4());
     });
 
-    it('should be possible to decorate the commands', () => {
+    it('should be possible to decorate the dapi fns', () => {
       const TestClass = DapiMixin(definition, BaseTestClass);
       const instance = new TestClass();
       const decorator = mock.fn(function (method, ...args) {
@@ -684,6 +691,39 @@ describe('DapiMixin', () => {
 
       assert.strictEqual(TestClass.testProperty, 'test');
       assert.strictEqual(TestClass.baseStaticProperty, 'baseStaticProperty');
+    });
+
+    it('should be possible to decorate all dapi functions at once', async () => {
+      const TestClass = DapiMixin(definition, BaseTestClass);
+      const instance = new TestClass();
+      const decorator = mock.fn(function (method, ...args) {
+        return method(...args);
+      });
+
+      const removeAllDecorators = instance.decorateAll(decorator);
+
+      assert.deepStrictEqual(instance.command1('a1', 'a2'), ['a1', 'a2']);
+      assert.deepStrictEqual(command1.mock.calls[0].arguments, [deps, 'a1', 'a2']);
+      assert.deepStrictEqual(command1.mock.calls[0].this, instance);
+      assert.equal(decorator.mock.callCount(), 1);
+
+      assert.deepStrictEqual(instance.command2(), undefined);
+      assert.deepStrictEqual(command2.mock.calls[0].arguments, [deps]);
+      assert.deepStrictEqual(command2.mock.calls[0].this, instance);
+      assert.equal(decorator.mock.callCount(), 2);
+
+      assert.deepStrictEqual(await instance.command3('a1', 'a2'), ['a1', 'a2']);
+      assert.deepStrictEqual(command3.mock.calls[0].arguments, [deps, 'a1', 'a2']);
+      assert.deepStrictEqual(command3.mock.calls[0].this, instance);
+      assert.equal(decorator.mock.callCount(), 3);
+
+      removeAllDecorators();
+
+      assert.deepStrictEqual(instance.command1('a1', 'a2'), ['a1', 'a2']);
+      assert.deepStrictEqual(instance.command2(), undefined);
+      assert.deepStrictEqual(await instance.command3('a1', 'a2'), ['a1', 'a2']);
+
+      assert.equal(decorator.mock.callCount(), 3);
     });
   });
 });

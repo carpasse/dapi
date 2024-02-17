@@ -334,6 +334,16 @@ The class also allows to decorate the Dapi functions with decorators and hooks.
 
 #### Methods
 
+##### `getDefinition`
+
+`DapiDefinition` getter.
+
+**Syntax**:
+
+```Typescript
+getDefinition(): DapiDefinition<DEPENDENCIES, DAPI>
+```
+
 ##### `getDependencies`
 
 Dependencies getter.
@@ -470,6 +480,27 @@ Removes a decorator from the `DapiWrapper` instance.
 
 - `key` - The name of the decorated method. Must be a key of the [`DapiDefinition.fns`](#dapidefinition) fns dictionary.
 - `decorator` - The decorator function to be removed from the method.
+
+##### `decorateAll`
+
+Decorates all the `DapiDefinition.fns` with the passed decorator.
+
+**Syntax**:
+
+```Typescript
+  decorateAll(decorator: DecoratorFn<DAPI[keyof DAPI], DapiWrapper>): () => void
+```
+
+**Parameters**:
+
+- `decorator` - The decorator function to be added to the method. Each decorator must accept the following arguments
+  - `fn` - The function to be decorated.
+  - `deps` - The dependencies of the [`DapiDefinition.fns`](#dapidefinition).
+  - `args` - The arguments passed to the method.
+
+**Returns**:
+
+- Function to remove the all the added that accepts no arguments.
 
 ##### `addHook`
 
