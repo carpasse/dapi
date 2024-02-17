@@ -1,6 +1,6 @@
 {
   "name": "@carpasse/dapi",
-  "version": "1.0.2-beta.1",
+  "version": "1.1.0-beta.1",
   "description": "Simple library to create complex systems out of pure functions",
   "main": "./dist/cjs/index.js",
   "module": "./dist/cjs/index.mjs",
