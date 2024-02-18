@@ -14,7 +14,7 @@ import {
 } from '../types/utils';
 import {assertType} from '../types/assertType';
 
-describe('utils', () => {
+describe('type utils', () => {
   describe('ExtractKeys', () => {
     it('should extract the keys of an object that match the keys of another object', () => {
       const obj = {
