@@ -397,7 +397,7 @@ Returns a JSON representation of the `DapiWrapper` instance.
 **Syntax**:
 
 ```Typescript
-  toJSON(...args: ParamsExtract<JSON['stringify'], [Parameters<JSON['stringify']>[0]]>)
+  toJSON(...args: ExtractFirstParam<JSON['stringify'], [Parameters<JSON['stringify']>[0]]>)
 ```
 
 **Parameters**:

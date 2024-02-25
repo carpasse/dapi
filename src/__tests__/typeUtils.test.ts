@@ -10,7 +10,8 @@ import {
   PartialPick,
   TupleExtract,
   ParamsExtract,
-  RemoveNever
+  RemoveNever,
+  ExtractFirstParam
 } from '../types/utils';
 import {assertType} from '../types/assertType';
 
@@ -255,6 +256,32 @@ describe('type utils', () => {
       assertType<RemoveNever<obj>>({a: 1, b: 2});
       // @ts-expect-error - 'c' is not a key of the object after removing never values
       assertType<RemoveNever<obj>>({a: 1, b: 2, c: 3});
+    });
+  });
+
+  describe('ExtractFirstParam', () => {
+    it('should return a new Type that extracts from the beginning of the params tuple those that match EXTRACTED in the beginning', () => {
+      const fn = (a: number, b: string, c: boolean) => {};
+
+      type fnType = typeof fn;
+
+      assertType<ExtractFirstParam<fnType>>(['b', true]);
+    });
+
+    it('should work with functions of only one param', () => {
+      const fn = (a: number) => {};
+
+      type fnType = typeof fn;
+
+      assertType<ExtractFirstParam<fnType>>([]);
+    });
+
+    it('should work with functions of 0 params', () => {
+      const fn = () => {};
+
+      type fnType = typeof fn;
+
+      assertType<ExtractFirstParam<fnType>>([]);
     });
   });
 });
