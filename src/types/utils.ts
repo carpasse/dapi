@@ -80,6 +80,12 @@ export type ParamsExtract<F extends AnyFunction, EXTRACTED extends AnyArgs = []>
   Parameters<F>,
   EXTRACTED
 >;
+/**
+ * Returns a new Type that extracts from the beginning of a Tuple of type TUPLE all the elements that match the specified type EXTRACTED in the beginning.
+ */
+export type ExtractFirstParam<F extends AnyFunction> = Parameters<F> extends []
+  ? []
+  : ParamsExtract<F, [Parameters<F>[0]]>;
 
 /**
  * Returns a new Type union with all the keys of type T that have values of type V.

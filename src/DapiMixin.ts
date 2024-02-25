@@ -1,4 +1,4 @@
-import {Constructor, ParamsExtract} from './types/utils';
+import {Constructor, ExtractFirstParam} from './types/utils';
 import {DapiFns, DecoratorFn, HookFn} from './types';
 
 /**
@@ -52,7 +52,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
     };
   };
   type Facade = {
-    [key in keyof DAPI]: (...args: ParamsExtract<DAPI[key], [DEPENDENCIES]>) => ReturnType<DAPI[key]>;
+    [key in keyof DAPI]: (...args: ExtractFirstParam<DAPI[key]>) => ReturnType<DAPI[key]>;
   };
 
   /**
@@ -90,7 +90,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
 
       for (const key of Object.keys(fns)) {
         // @ts-expect-error - tried to define an index signature but it didn't work
-        this[key] = (...params: ParamsExtract<DAPI[typeof key], [DEPENDENCIES]>) => {
+        this[key] = (...params: ExtractFirstParam<DAPI[typeof key], [DEPENDENCIES]>) => {
           return this.__facade[key](...params);
         };
       }
@@ -102,7 +102,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
       for (const entry of Object.entries(fns)) {
         const [key, command] = entry as [keyof DAPI, (typeof fns)[keyof DAPI]];
 
-        facade[key] = (...params: ParamsExtract<DAPI[typeof key], [DEPENDENCIES]>) => {
+        facade[key] = (...params: ExtractFirstParam<DAPI[typeof key]>) => {
           return command.call(this, this.__deps, ...params);
         };
       }
@@ -117,7 +117,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
 
       const command = this.__definition.fns[key];
 
-      this.__facade[key] = (...params: ParamsExtract<DAPI[typeof key], [DEPENDENCIES]>) => {
+      this.__facade[key] = (...params: ExtractFirstParam<DAPI[typeof key]>) => {
         const decoratorFns = this.decorators[key];
         const decorators = [...(decoratorFns ?? [])];
         const hookDecorator = this.__hookDecorator(key);
@@ -153,7 +153,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
 
       const command = this.__definition.fns[key];
 
-      this.__facade[key] = (...params: ParamsExtract<DAPI[typeof key], [DEPENDENCIES]>) => {
+      this.__facade[key] = (...params: ExtractFirstParam<DAPI[typeof key]>) => {
         return command.call(this, this.__deps, ...params);
       };
 
@@ -198,11 +198,20 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
     }
 
     /**
+     * DapiDefinition getter.
+     *
+     * @returns DapiDefinition
+     */
+    getDefinition() {
+      return this.__definition;
+    }
+
+    /**
      * Returns a JSON representation of the `DapiWrapper` instance.
      * @param replacer An array of strings and numbers that acts as an approved list for selecting the object properties that will be stringified.
      * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
      */
-    toJSON(...args: ParamsExtract<JSON['stringify'], [Parameters<JSON['stringify']>[0]]>) {
+    toJSON(...args: ExtractFirstParam<JSON['stringify']>) {
       return JSON.stringify(this.__definition, ...args);
     }
 
@@ -238,6 +247,25 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
 
       return () => {
         this.removeDecorator(key, decorator);
+      };
+    }
+
+    /**
+     * Decorates all the Dapi functions of the `DapiWrapper`'s Dapi functions dictionary.
+     * @param decorator The decorator function. The decorator function receives the decorated function as its first argument and the rest of the arguments are the arguments of the decorated function.
+     * @returns A function to remove all the added decorators.
+     */
+    decorateAll(decorator: DecoratorFn<DAPI[keyof DAPI], DapiWrapper>) {
+      const removeDecorators: (() => void)[] = [];
+
+      for (const key of Object.keys(this.__definition.fns)) {
+        removeDecorators.push(this.addDecorator(key as keyof DAPI, decorator));
+      }
+
+      return () => {
+        for (const removeDecorator of removeDecorators) {
+          removeDecorator();
+        }
       };
     }
 
