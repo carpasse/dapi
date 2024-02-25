@@ -1,4 +1,4 @@
-import {Constructor, ParamsExtract} from './types/utils';
+import {Constructor, ExtractFirstParam} from './types/utils';
 import {DapiFns, DecoratorFn, HookFn} from './types';
 
 /**
@@ -52,7 +52,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
     };
   };
   type Facade = {
-    [key in keyof DAPI]: (...args: ParamsExtract<DAPI[key], [DEPENDENCIES]>) => ReturnType<DAPI[key]>;
+    [key in keyof DAPI]: (...args: ExtractFirstParam<DAPI[key]>) => ReturnType<DAPI[key]>;
   };
 
   /**
@@ -90,7 +90,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
 
       for (const key of Object.keys(fns)) {
         // @ts-expect-error - tried to define an index signature but it didn't work
-        this[key] = (...params: ParamsExtract<DAPI[typeof key], [DEPENDENCIES]>) => {
+        this[key] = (...params: ExtractFirstParam<DAPI[typeof key], [DEPENDENCIES]>) => {
           return this.__facade[key](...params);
         };
       }
@@ -102,7 +102,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
       for (const entry of Object.entries(fns)) {
         const [key, command] = entry as [keyof DAPI, (typeof fns)[keyof DAPI]];
 
-        facade[key] = (...params: ParamsExtract<DAPI[typeof key], [DEPENDENCIES]>) => {
+        facade[key] = (...params: ExtractFirstParam<DAPI[typeof key]>) => {
           return command.call(this, this.__deps, ...params);
         };
       }
@@ -117,7 +117,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
 
       const command = this.__definition.fns[key];
 
-      this.__facade[key] = (...params: ParamsExtract<DAPI[typeof key], [DEPENDENCIES]>) => {
+      this.__facade[key] = (...params: ExtractFirstParam<DAPI[typeof key]>) => {
         const decoratorFns = this.decorators[key];
         const decorators = [...(decoratorFns ?? [])];
         const hookDecorator = this.__hookDecorator(key);
@@ -153,7 +153,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
 
       const command = this.__definition.fns[key];
 
-      this.__facade[key] = (...params: ParamsExtract<DAPI[typeof key], [DEPENDENCIES]>) => {
+      this.__facade[key] = (...params: ExtractFirstParam<DAPI[typeof key]>) => {
         return command.call(this, this.__deps, ...params);
       };
 
@@ -211,7 +211,7 @@ export function DapiMixin<DEPENDENCIES, DAPI extends DapiFns<DEPENDENCIES>, T ex
      * @param replacer An array of strings and numbers that acts as an approved list for selecting the object properties that will be stringified.
      * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
      */
-    toJSON(...args: ParamsExtract<JSON['stringify'], [Parameters<JSON['stringify']>[0]]>) {
+    toJSON(...args: ExtractFirstParam<JSON['stringify']>) {
       return JSON.stringify(this.__definition, ...args);
     }
 
