@@ -1,5 +1,5 @@
-import {Constructor, ExtractFirstParam} from './types/utils';
-import {DapiFns, DecoratorFn, HookFn} from './types';
+import {Constructor, ExtractFirstParam} from './types/utils.js';
+import {DapiFns, DecoratorFn, HookFn} from './types/index.js';
 
 /**
  * Represents an DAPI definition with dependencies and pure functions.
