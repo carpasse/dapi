@@ -1,4 +1,4 @@
-import {AnyFunction} from './utils';
+import {AnyFunction} from './utils.js';
 
 /**
  * Dapi function type. It is a function that receives the dependencies as the first argument.

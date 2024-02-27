@@ -1,6 +1,6 @@
-import {DapiMixin, DapiDefinition} from './DapiMixin';
-import {DapiFns} from './types';
-import {Constructor} from './types/utils';
+import {DapiMixin, DapiDefinition} from './DapiMixin.js';
+import type {DapiFns} from './types/index.js';
+import {Constructor} from './types/utils.js';
 
 /**
  * Creates an Dapi facade.
