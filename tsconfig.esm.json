@@ -4,7 +4,8 @@
     "declaration": true,
     "declarationDir": "./dist/esm",
     "outDir": "./dist/esm",
-    "module": "esnext",
-    "target": "ESNext"
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "es2022"
   }
 }
